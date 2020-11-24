@@ -33,26 +33,82 @@
    ----------------------------------------------------------------------------
 */
 
-#pragma once
+#include "Memory.h"
 
-#include <string>
+#include <iostream>
+#include <fstream>
+#include <iomanip>
 
-class Memory
+using namespace std;
+
+Memory::Memory(int size)
 {
-public:
-	Memory(int size);
-	~Memory();
+	data = new char[size];
+}
 
-	void loadBinary(std::string filename);
-	void writeBinaryAsText (std::string basename);
-	
-	/**
-	 * Lê um inteiro de 32 bits considerando um endereçamento em bytes.
-	 */
-	int readInt(long address);
+Memory::~Memory()
+{
+	delete[] data;
+}
 
-private:
-	char* data;        //memory data
-	unsigned short fileSize;    //size of the loaded binary file
-};
+/**
+ * Lê um inteiro de 32 bits considerando um endereçamento em bytes.
+ */
+int Memory::readInt(long address) {
+	return ((int*)data)[address >> 2];
+}
+
+// carrega arquivo binário na memória
+void Memory::loadBinary(string filename)
+{
+    streampos size;
+
+    ifstream file(filename, ios::in|ios::binary|ios::ate);
+    if (file.is_open())
+    {
+        fileSize = file.tellg();
+        file.seekg (0, ios::beg);
+        file.read (data, fileSize);
+        file.close();
+    }
+    else {
+        cout << "Unable to open file " << filename << endl;
+		cout << "Aborting... " << endl;
+		exit(1);
+    }
+}
+
+
+//Escreve arquivo binario em um arquivo legível
+#define LINE_SIZE 4
+void Memory::writeBinaryAsText (string basename) {
+    string filename = "txt_" + basename + ".txt";
+    ofstream ofp;
+    int i,j;
+
+    cout << "Gerado arquivo " << filename << endl << endl;
+    ofp.open(filename);
+
+    ofp << uppercase << hex;
+
+    // caption
+    ofp << "ADDR    ";
+    for (j=0; j<LINE_SIZE; j++) {
+        ofp << "ADDR+" << setfill('0') << setw(2) << 4*j << "  ";
+    }
+    ofp << endl << "----------------------------------------------------------------------------" << endl;
+
+
+    // binary
+    i=0;
+    for (i = 0; i < fileSize / 4; i+=LINE_SIZE) {
+        ofp << setw(4) << 4*i << "    ";
+        for (j=0; j<LINE_SIZE; j++) {
+            ofp << setw(8) << ((unsigned int *)data)[i+j] << " ";
+        }
+        ofp << endl;
+    }
+    ofp.close();
+}
+
 

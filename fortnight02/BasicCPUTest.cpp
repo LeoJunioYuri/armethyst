@@ -33,8 +33,60 @@
    ----------------------------------------------------------------------------
 */
 
-#pragma once
+#include "BasicCPUTest.h"
 
-#define MEMORY_SIZE 65536
-#define FILENAME "isummation.o"
-#define STARTADDRESS 0x40
+/**
+ * Apenas inicia PC, não executa o ciclos de máquina.
+ */
+BasicCPUTest::BasicCPUTest(Memory *memory)
+	: BasicCPU(memory)
+{
+/* 	// inicia PC com o valor de startAddress
+	PC = startAddress;
+
+	return 0;
+ */}
+	
+int BasicCPUTest::getIR() {
+	return IR;
+}
+
+void BasicCPUTest::setSP(long address) {
+	SP = address;
+}
+
+int BasicCPUTest::getW(int n) {
+	return BasicCPU::getW(n);
+}
+
+void BasicCPUTest::setW(int n, int value) {
+	BasicCPU::setW(n,value);
+}
+
+long BasicCPUTest::getA() {
+	return A;
+}
+
+long BasicCPUTest::getB() {
+	return B;
+}
+
+ALUctrlFlag BasicCPUTest::getALUctrl() {
+	return ALUctrl;
+}
+	
+long BasicCPUTest::getALUout() {
+	return ALUout;
+}
+
+void BasicCPUTest::runIF() {
+	IF();
+}
+
+int BasicCPUTest::runID() {
+	return ID();
+}
+
+int BasicCPUTest::runEXI() {
+	return EXI();
+}

@@ -35,9 +35,9 @@
 
 #include "config.h"
 
-#include "Factory.h"
 #include "Memory.h"
 #include "Processor.h"
+#include "BasicProcessor.h"
 
 using namespace std;
 
@@ -45,11 +45,11 @@ int main()
 {	
 	// (EN) create memory
 	// (PT) cria memória
-	Memory* memory = Factory::createMemory();
+	Memory* memory = new Memory(MEMORY_SIZE);
 	
 	// (EN) create processor
 	// (PT) cria processador
-	Processor* processor = Factory::createProcessor(memory);
+	Processor* processor = new BasicProcessor(memory);
 		
 	// (EN) load executable binary
 	// (PT) carrega binário executável

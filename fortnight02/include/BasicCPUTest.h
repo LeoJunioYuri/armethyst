@@ -1,10 +1,16 @@
 /* ----------------------------------------------------------------------------
 
-    (EN) armethyst - A simple ARM Simulator written in C++ for Computer Architecture
+    (EN) BasicCPUTest - test class for BasicCPU. Allows access to registers
+	and protected methods.
+		
+	armethyst - A simple ARM Simulator written in C++ for Computer Architecture
     teaching purposes. Free software licensed under the MIT License (see license
     below).
 
-    (PT) armethyst - Um simulador ARM simples escrito em C++ para o ensino de
+    (PT) BasicCPUTest - classe de teste de BasicCPU. Permite acesso aos
+	registradores e métodos protegidos.
+    
+	armethyst - Um simulador ARM simples escrito em C++ para o ensino de
     Arquitetura de Computadores. Software livre licenciado pela MIT License
     (veja a licença, em inglês, abaixo).
 
@@ -35,6 +41,28 @@
 
 #pragma once
 
-#define MEMORY_SIZE 65536
-#define FILENAME "isummation.o"
-#define STARTADDRESS 0x40
+#include "BasicCPU.h"
+#include "Memory.h"
+
+class BasicCPUTest: public BasicCPU
+{
+	public:
+		BasicCPUTest(Memory *memory);
+		
+		int getIR();
+		
+		void setSP(long address);
+		
+		int getW(int n);
+		void setW(int n, int value);
+		
+		long getA();
+		long getB();
+		ALUctrlFlag getALUctrl();
+		
+		long getALUout();
+		
+		void runIF();
+		int runID();
+		int runEXI();
+};

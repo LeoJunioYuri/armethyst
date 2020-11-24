@@ -17,19 +17,16 @@ v:
 	.word	4
 	.word	1
 	.word	8
-	.global	summ
-	.bss
-	.align	2
-	.type	summ, %object
-	.size	summ, 4
-summ:
-	.zero	4
+	.comm	summ,4,4
 	.text
 	.align	2
 	.global	main
 	.type	main, %function
 main:
 	sub	sp, sp, #16
+	adrp	x0, summ
+	add	x0, x0, :lo12:summ
+	str	wzr, [x0]
 	str	wzr, [sp, 12]
 	b	.L2
 .L3:

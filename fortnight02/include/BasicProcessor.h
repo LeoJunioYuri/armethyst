@@ -1,16 +1,22 @@
 /* ----------------------------------------------------------------------------
-
-    (EN) armethyst - A simple ARM Simulator written in C++ for Computer Architecture
+	
+	(EN) BasicProcessor - A single core processor with a basic CPU. Part of
+	armethyst project.
+	
+    armethyst - A simple ARM Simulator written in C++ for Computer Architecture
     teaching purposes. Free software licensed under the MIT License (see license
     below).
 
-    (PT) armethyst - Um simulador ARM simples escrito em C++ para o ensino de
+	(PT) BasicProcessor - Um processador de núcleo único com uma CPU básica.
+	Parte do projeto armethyst.
+	
+    armethyst - Um simulador ARM simples escrito em C++ para o ensino de
     Arquitetura de Computadores. Software livre licenciado pela MIT License
-    (veja a licenÃ§a, em inglÃªs, abaixo).
+    (veja a licença, em inglês, abaixo).
 
     (EN) MIT LICENSE:
 
-    Copyright 2020 AndrÃ© Vital SaÃºde
+    Copyright 2020 André Vital Saúde
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -33,8 +39,12 @@
    ----------------------------------------------------------------------------
 */
 
-#pragma once
+#include "Processor.h"
 
-#define MEMORY_SIZE 65536
-#define FILENAME "isummation.o"
-#define STARTADDRESS 0x40
+class BasicProcessor: public Processor
+{
+	public:
+		BasicProcessor(Memory* _memory);
+		
+		int run(int startAddress);
+};
