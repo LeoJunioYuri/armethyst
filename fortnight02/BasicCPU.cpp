@@ -115,8 +115,8 @@ int BasicCPU::ID()
 			fpOP = false;
 			return decodeDataProcImm();
 			break;
-        //case 0x1A000000:
-        case 0xB0000210:
+        case 0x1A000000:
+        case 0x0A000000:
             return decodeDataProcReg();
             break;
 		// x101 Data Processing -- Register on page C4-278
